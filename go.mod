@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/go-redis/redismock/v9 v9.2.0
-	github.com/onsi/ginkgo v1.16.5
+	github.com/onsi/ginkgo/v2 v2.28.1
 	github.com/onsi/gomega v1.25.0
 	github.com/redis/go-redis/v9 v9.6.3
 )
