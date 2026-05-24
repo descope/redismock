@@ -3427,14 +3427,14 @@ var _ = Describe("Commands", func() {
 		It("TSMGetWithArgs", func() {
 			operationMapStringSliceInterfaceCmd(clientMock, func() *ExpectedMapStringSliceInterface {
 				return clientMock.ExpectTSMGetWithArgs([]string{"filter"}, &redis.TSMGetOptions{
-					Latest: true,
-					WithLabels: true,
+					Latest:         true,
+					WithLabels:     true,
 					SelectedLabels: []interface{}{"label1", "label2", 100},
 				})
 			}, func() *redis.MapStringSliceInterfaceCmd {
 				return client.TSMGetWithArgs(ctx, []string{"filter"}, &redis.TSMGetOptions{
-					Latest: true,
-					WithLabels: true,
+					Latest:         true,
+					WithLabels:     true,
 					SelectedLabels: []interface{}{"label1", "label2", 100},
 				})
 			})
