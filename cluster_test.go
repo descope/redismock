@@ -30,7 +30,7 @@ var _ = Describe("Cluster", func() {
 			clusterMock.ExpectGet("key").RedisNil()
 			clusterMock.ExpectSet("key", "1", 1*time.Second).SetVal("OK")
 			clusterMock.ExpectGet("key").SetVal("1")
-			clusterMock.ExpectGetSet("key", "0").SetVal("1")
+			clusterMock.ExpectSetArgs("key", "0", redis.SetArgs{Get: true}).SetVal("1")
 		})
 
 		It("ordinary", func() {
@@ -46,7 +46,7 @@ var _ = Describe("Cluster", func() {
 			Expect(get.Err()).NotTo(HaveOccurred())
 			Expect(get.Val()).To(Equal("1"))
 
-			getSet := client.GetSet(ctx, "key", "0")
+			getSet := client.SetArgs(ctx, "key", "0", redis.SetArgs{Get: true})
 			Expect(getSet.Err()).NotTo(HaveOccurred())
 			Expect(getSet.Val()).To(Equal("1"))
 
@@ -71,14 +71,14 @@ var _ = Describe("Cluster", func() {
 			Expect(hasUnexpectedCall).To(BeFalse())
 			Expect(unexpectedCalls).To(BeNil())
 
-			_ = client.GetSet(ctx, "key", "0")
+			_ = client.SetArgs(ctx, "key", "0", redis.SetArgs{Get: true})
 		})
 
 		It("not enough", func() {
 			_ = client.Get(ctx, "key")
 			_ = client.Set(ctx, "key", "1", 1*time.Second)
 			_ = client.Get(ctx, "key")
-			_ = client.GetSet(ctx, "key", "0")
+			_ = client.SetArgs(ctx, "key", "0", redis.SetArgs{Get: true})
 			Expect(clusterMock.ExpectationsWereMet()).NotTo(HaveOccurred())
 
 			get := client.HGet(ctx, "key", "field")
@@ -98,7 +98,7 @@ var _ = Describe("Cluster", func() {
 
 			clusterMock.ExpectSet("key", "1", 1*time.Second).SetVal("OK")
 			clusterMock.ExpectGet("key").SetVal("1")
-			clusterMock.ExpectGetSet("key", "0").SetVal("1")
+			clusterMock.ExpectSetArgs("key", "0", redis.SetArgs{Get: true}).SetVal("1")
 		})
 
 		AfterEach(func() {
@@ -116,7 +116,7 @@ var _ = Describe("Cluster", func() {
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
-			getSet := client.GetSet(ctx, "key", "0")
+			getSet := client.SetArgs(ctx, "key", "0", redis.SetArgs{Get: true})
 			Expect(getSet.Err()).NotTo(HaveOccurred())
 			Expect(getSet.Val()).To(Equal("1"))
 		})

@@ -488,11 +488,11 @@ var _ = Describe("Commands", func() {
 			})
 		})
 
-		It("GetSet", func() {
-			operationStringCmd(clientMock, func() *ExpectedString {
-				return clientMock.ExpectGetSet("key", 1)
-			}, func() *redis.StringCmd {
-				return client.GetSet(ctx, "key", 1)
+		It("SetArgs with Get (replaces deprecated GetSet)", func() {
+			operationStatusCmd(clientMock, func() *ExpectedStatus {
+				return clientMock.ExpectSetArgs("key", 1, redis.SetArgs{Get: true})
+			}, func() *redis.StatusCmd {
+				return client.SetArgs(ctx, "key", 1, redis.SetArgs{Get: true})
 			})
 		})
 
