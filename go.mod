@@ -6,7 +6,7 @@ require (
 	github.com/go-redis/redismock/v9 v9.2.0
 	github.com/onsi/ginkgo/v2 v2.29.0
 	github.com/onsi/gomega v1.41.0
-	github.com/redis/go-redis/v9 v9.20.0
+	github.com/redis/go-redis/v9 v9.20.1
 )
 
 require (
